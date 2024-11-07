@@ -68,7 +68,7 @@ seurat2anndata <- function(obj, outFile = NULL, assay = "RNA", main_layer = "dat
 
   obs <- .regularise_df(obj@meta.data, drop_single_values = drop_single_values)
 
-  var <- .regularise_df(Seurat::GetAssay(obj, assay = assay)@meta.data, drop_single_values = drop_single_values)
+  var <- .regularise_df(Seurat::GetAssay(obj, assay = assay)@features, drop_single_values = drop_single_values)
 
   obsm <- NULL
   reductions <- names(obj@reductions)
