@@ -52,7 +52,7 @@ seurat2anndata <- function(obj, outFile = NULL, assay = "RNA", main_layer = "dat
   if (!requireNamespace("SeuratObject")) {
     stop("This function requires the 'SeuratObject' package.")
   }
-  LayerData_func <- getExportedValue("SeuratObject", "LayerData")
+  requireNamespace("SeuratObject")
   
   main_layer <- match.arg(main_layer, c("data", "counts", "scale.data"))
   transfer_layers <- transfer_layers[
@@ -64,7 +64,7 @@ seurat2anndata <- function(obj, outFile = NULL, assay = "RNA", main_layer = "dat
     obj <- Seurat::UpdateSeuratObject(object = obj)
   }
 
-  X <- LayerData_func(object = obj, assay = assay, layer = main_layer)
+  X <- LayerData(object = obj, assay = assay, layer = main_layer)
 
   obs <- .regularise_df(obj@meta.data, drop_single_values = drop_single_values)
 
@@ -83,7 +83,7 @@ seurat2anndata <- function(obj, outFile = NULL, assay = "RNA", main_layer = "dat
 
   layers <- list()
   for (layer in transfer_layers) {
-    mat <- LayerData_func(object = obj, assay = assay, layer = layer)
+    mat <- LayerData(object = obj, assay = assay, layer = layer)
     if (all(dim(mat) == dim(X))) layers[[layer]] <- Matrix::t(mat)
   }
 
