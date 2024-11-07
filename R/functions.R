@@ -59,7 +59,7 @@ seurat2anndata <- function(obj, outFile = NULL, assay = "RNA", main_layer = "dat
     obj <- Seurat::UpdateSeuratObject(object = obj)
   }
 
-  X <- Seurat::GetAssayData(object = obj, assay = assay, slot = main_layer)
+  X <- Seurat::LayerData(object = obj, assay = assay, layer = main_layer)
 
   obs <- .regularise_df(obj@meta.data, drop_single_values = drop_single_values)
 
@@ -78,7 +78,7 @@ seurat2anndata <- function(obj, outFile = NULL, assay = "RNA", main_layer = "dat
 
   layers <- list()
   for (layer in transfer_layers) {
-    mat <- Seurat::GetAssayData(object = obj, assay = assay, slot = layer)
+    mat <- Seurat::LayerData(object = obj, assay = assay, layer = layer)
     if (all(dim(mat) == dim(X))) layers[[layer]] <- Matrix::t(mat)
   }
 
