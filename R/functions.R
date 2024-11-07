@@ -49,6 +49,9 @@ seurat2anndata <- function(obj, outFile = NULL, assay = "RNA", main_layer = "dat
   if (!requireNamespace("Seurat")) {
     stop("This function requires the 'Seurat' package.")
   }
+  if (!requireNamespace("SeuratObject")) {
+    stop("This function requires the 'SeuratObject' package.")
+  }
   main_layer <- match.arg(main_layer, c("data", "counts", "scale.data"))
   transfer_layers <- transfer_layers[
     transfer_layers %in% c("data", "counts", "scale.data")
